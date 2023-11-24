@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <script defer src="./app.js"></script>
+
+    <link rel="shortcut icon" type="image⁄x-icon" href="./image/heart.png">
+    <title>오늘의 운세🤞</title>
+</head>
+
+<body>
+    <header>
+        <h1>오늘의 운세<span id="emoji">🤞</span></h1>
+    </header>
+    <main>
+        <div class="container">
+
+            <div id="top">
+                <div class="explain-text">오늘 이루고 싶은 것을 생각하며 버튼 하나를 눌러보세요:&#41;</div>
+                <div class="buttons" id="buttons">
+                    <button class="money-button" id="money-button">
+                        <img src="./image/diamond.png" alt="재물운 버튼" width="200" height="200">
+                        <div>재물운</div>
+                    </button>
+                    <button class="success-button" id="success-button">
+                        <img src="./image/clover.png" alt="성공운 버튼" width="200" height="200">
+                        <div>성공운</div>
+                    </button>
+                    <button class="love-button" id="love-button">
+                        <img src="./image/love.png" alt="애정운 버튼" width="200" height="200">
+                        <div>애정운</div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="content" id="middle">
+                <div class="content-box">
+                    <div class="fortune-result" id="fortune-result"></div>
+
+
+                    <!-- <div>
+                            <div class="lucky-text" id="lucky-text"></div>
+                            <span class="lucky-name" id="lucky-name"></span>
+                        </div> -->
+
+                    <div id="result">
+                        <table id="cho">
+                            <tr>
+                                <td>
+                                    <span class="lucky-text" id="lucky-text"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="lucky-name" id="lucky-name"></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="luckyColor">
+                            <tr>
+                                <td class="colorTable">
+                                    <span>행운의 색</span>
+                                </td>
+                                <td rowspan="2">
+                                    <div id="color"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span id="colorName"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div id="destroy">
+                        <button class="debutton">맘에 안드시면 눌러주세요!</button>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <p id="fact" class='true'>사실은 랜덤이라 의미없으니 신경쓰지마세요!</p>
+
+        </div>
+    </main>
+
+</body>
+
+</html>
