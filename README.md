@@ -136,6 +136,11 @@ const setFortuneResult = () => {
 함수를 통해 이름을 무작위로 뽑을 수 있게 함.
 
 ```javascript
+const names = [ 'ㅇㅈㅎ','ㄱㄱㅇ','ㄱㄴㅎ', 'ㄱㅁㅅ','ㄱㅇㅇ','ㄱㅈㅊ','ㄱㅈㄱ', 'ㄱㅌㅎ',
+  'ㄴㄱㄹ','ㅁㅈㅎ','ㅂㅅㅈ','ㅂㅇㅎ','ㅂㅈㅎ','ㅅㅇㅅ','ㅅㅅㅁ','ㅇㅅㅇ','ㅇㅅㅁ','ㅇㅇㅎ',
+  'ㅇㅈㅇ','ㅇㄱㅈ','ㅇㄱㄹ','ㅇㅇㅈ','ㅇㅈㅊ','ㅇㄷㅂ','ㅇㅅㅅ','ㅈㅁㅎ', 'ㅈㅇㅈ', 'ㅊㅈㅁ',
+  'ㅎㅎㅈ','ㅇㅇㅅ',
+];
 const getLuckyName = () => {
     console.log(names.length);
     return names[Math.floor(Math.random() * names.length)]
