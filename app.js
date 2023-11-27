@@ -76,7 +76,7 @@ function randomColorSelector() {
     'khaki',
     'pink',
   ];
-  const randomColor = Math.floor(Math.random() * 19);
+  const randomColor = Math.floor(Math.random() * colorCode.length);
   return colorCode[randomColor];
 }
 
