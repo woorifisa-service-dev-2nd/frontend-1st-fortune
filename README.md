@@ -38,134 +38,168 @@
 
 # 4. 핵심 기능 설명 및 구현 방법
 
-- [버튼 클릭 이벤트](#4.1-버튼-클릭-이벤트)
-- [랜덤으로 점수와 초성 얻기](#4.2-랜덤으로-점수와-초성-얻기)
-- [정해 둔 범위에 따라 점수를 문자열로 변환](#4.3-정해-둔-범위에-따라-점수를-문자열로-변환)
-- [화면에 결과값 보여주기](#4.4-화면에-결과값-보여주기)
-- [나와있는 결과창 맘에 안들면 누르는 버튼](#4.5-버튼-클릭시-상위의-제목-제외하고-제거)
-
-## 4.0 미리 입력해 둔 데이터
-
-### 점수에 따른 운세
-
-| 점 수    | 이 름    |
-| -------- | -------- |
-| 0~9점    | 매우나쁨 |
-| 10~29점  | 나 쁨    |
-| 30~69점  | 보 통    |
-| 70~89점  | 좋 음    |
-| 90~100점 | 매우좋음 |
-
-## 4.1 버튼 클릭 이벤트
-
-사용자가 버튼을 클릭하면?
-
-### 운세 점수
-
-1. `getFortunePoint`: 랜덤으로 0~100 사이의 숫자를 만들기
-
-- `Math.floor()`, `Math.random()`
-
-2. `fortunePointToText` : 숫자를 문자열로 매핑하기
-
-3. `buttonClickHandler`: 화면에 보여주기
-
-### 버튼
-
-1. 모든 버튼 비활성화(한 번에 하나의 운세만 확인 가능하도록)
+- [이모지 갱신](#4.0-이모지-갱신)
+- [아이콘 동작](#4.1-아이콘-동작)
+- [버튼 클릭 시](#4.2-버튼-클릭-시)
+- [결과 불복](#4.3-결과-불복)
+- [버튼 클릭 이벤트](#4.4-버튼-클릭-이벤트)
+# 4.0 이모지 갱신
+emojiMouseEnterHandler, emojiMouseLeaveHandler 를 각각 정의해서 갱신될 수 있도록 함.
 
 ```javascript
-const buttonList = [moneyButton, successButton, loveButton];
+const emojiMouseEnterHandler = () => {
+    emoji.innerText = '✌';
+}
 
-buttonList.forEach((button) => {
-  button.disabled = true;
-});
+const emojiMouseLeaveHandler = () => {
+    emoji.innerText = '🤞';
+}
+emoji.addEventListener('mouseenter', emojiMouseEnterHandler);
+emoji.addEventListener('mouseleave', emojiMouseLeaveHandler);
 ```
 
-2. 사용자가 클릭하지 않은 버튼은 화면에서 지우기
+# 4.1 아이콘 동작 
+버튼에 마우스를 올려 놓으면 아이콘의 크기가 커지게 함.
+hover: 이미지, 텍스트, 버튼 등에 마우스 포인터가 올라갔을 때 발동되는 일종의 전환효과.
 
 ```javascript
-const others = buttonList.filter((button) => button.id !== target);
+img{
+    transform:  scale(1.0);
+    transition: transform 0.5s;
+}
 
-others.forEach((otherButton) => {
-  otherButton.style.display = 'none';
-});
+img:hover {
+    transform: scale(1.1) ;
+    transition: transform 0.5s;
+}
 ```
 
-### 행운을 가져다줄 귀인
+# 4.2 버튼 클릭 시
+1. display = 'none'
+클릭 이벤트가 트리거 되었을 때 클릭되지 않은 나머지 버튼들이 사라지도록 설정.
+2. jutifyContent = 'center'
+클릭한 버튼이 가운데로 오도록 설정.
+3. disabled = true 
+아이콘이 더이상 클릭되지 않도록 설정.
 
-1. names 중에서 랜덤으로 하나의 초성을 고르기
-2. 화면에 보여주기
+```javascript
+const changeButtons = (target) => {
+    const others = buttonList.filter((button) => button.id !== target);
 
-## 4.2 이모지 변경
+    others.forEach((otherButton) => {
+        otherButton.style.display = 'none';
+    })
 
-사용자가 이모지 위에 마우스를 이동하면
+    buttonList.forEach((button) => {
+        button.disabled = true;
+    })
 
-- ✌로 변경
 
-사용자가 이모지 밖으로 마우스를 이동하면
+    buttons.style.justifyContent = 'center'
+    dbtn.style.display = 'flex';
+}
+```
 
-- 🤞로 변경
+### 오늘의 운세
+1. getFortunePoint: 랜덤으로 0~100 사이의 숫자를 만듦.
+2. fortunePointToText : 숫자를 문자열로 매핑하기.
 
-## 4.3 이미지 확대
+```javascript
+const getFortunePoint = () => {
+    return Math.floor(Math.random() * 100)
+}
 
-사용자가 이미지 위로 마우스를 이동하면
+const fortunePointToText = (point) => {
+    if (point < 10) {
+        return pointScale[0]
+    } else if (point < 30) {
+        return pointScale[1]
+    }
+    else if (point < 70) {
+        return pointScale[2]
+    } else if (point < 90) {
+        return pointScale[3]
+    } else {
+        return pointScale[4]
+    }
+}
 
-- 이미지 10% 확대
+const setFortuneResult = () => {
+    const fortunePoint = getFortunePoint()
+    let fortuneText = fortunePointToText(fortunePoint);
 
-사용자가 이미지 밖으로 마우스를 이동하면
+    fortuneResult.innerText = fortuneText;
+}
+```
 
-- 이미지 원래 크기로 변경
+### 오늘의 은인
+함수를 통해 이름을 무작위로 뽑을 수 있게 함.
 
-## 4.4 맘에 안들경우의 누르는 버튼
+```javascript
+const getLuckyName = () => {
+    console.log(names.length);
+    return names[Math.floor(Math.random() * names.length)]
+    }
+const setLuckyPerson = () => {
+    luckyText.innerText = '오늘의 은인'
+    luckyName.innerText = getLuckyName()
+}
 
-- 누를 경우 해당 버튼이 있는 태그를 포함하여 결과값을 전부 `display: 'none'`처리
-- 해당 버튼은 눈에 잘보이게 하기 위해 깜빡이는 효과 추가
-- 누른 이후로는 숨겨져 있던 문구를 `display: inline-block` 처리함으로서 드러나게 구현
-- 해당 문구는 `@keyframe`의 `bounce`를 통해 글자가 부각되게함
+```
 
-## 4.5 행운의 색
+### 오늘의 색상
 
 ```javascript
 function randomColorSelector() {
-  const colorCode = [
-    'white',
-    'black',
-    'gray',
-    'red',
-    'orange',
-    'yellow',
-    'green',
-    'blue',
-    'navy',
-    'purple',
-    'violet',
-    'olive',
-    'skyblue',
-    'lime',
-    'beige',
-    'brown',
-    'ivory',
-    'khaki',
-    'pink',
-  ];
-  const randomColor = Math.floor(Math.random() * 19);
-  return colorCode[randomColor];
+    const colorCode = ['white', 'black', 'gray', 'red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple',
+        'violet', 'olive', 'skyblue', 'lime', 'beige', 'brown', 'ivory', 'khaki', 'pink'];
+const randomColor = Math.floor(Math.random() * 19);
 }
-
 const setLuckyColor = () => {
-  const colorValue = randomColorSelector();
+    const colorValue = randomColorSelector();
 
-  color.style.backgroundColor = colorValue;
-  colorName.innerText = colorValue.toUpperCase();
+    color.style.backgroundColor = colorValue;
+    colorName.innerText = colorValue.toUpperCase();
 
-  result.style.display = 'flex';
-  luckyColor.style.width = 'fit-content';
-};
+    result.style.display = 'flex';
+    luckyColor.style.width = 'fit-content';
+}
 ```
 
-randomColorSelector 함수로 랜덤한 색상을 colorCode 배열에서 뽑아온 후
-해당 색을 테이블에 적용시키고 대문자로 변경하여 작성함
+# 4.3 운세가 마음에 안 들었을 때!
+1. display = 'none'
+버튼을 누를 경우 화면에 보이는 결과들이 전부 안보이도록 설정.
+2. display = 'inline-block'
+숨겨져 있던 문구를 드러나도록 설정.
+3. @keyframes의 blink-effect와 bounce 이용.
+
+```javascript
+const reset = () => {
+    fact.style.display = 'inline-block';
+    dbtn.style.display = 'none';
+    top2.style.display = 'none';
+    middle.style.display = 'none';
+}
+
+dbtn.addEventListener('click', reset);
+```
+
+# 4.4 버튼 클릭 이벤트
+
+```javascript
+const buttonClickHandler = (event) => {
+  const target = event.currentTarget.id;
+  setFortuneResult(target);
+  setLuckyPerson();
+  setLuckyColor();
+  changeButtons(target);
+};
+
+moneyButton.addEventListener('click', buttonClickHandler);
+successButton.addEventListener('click', buttonClickHandler);
+loveButton.addEventListener('click', buttonClickHandler);
+```
+
 
 # 5. 트러블 슈팅
 
