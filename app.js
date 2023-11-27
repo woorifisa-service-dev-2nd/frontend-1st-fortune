@@ -100,7 +100,7 @@ const fortunePointToText = (point) => {
 
 const getLuckyName = () => {
   console.log(names.length);
-  return names[Math.floor(Math.random() * names.length - 1)];
+  return names[Math.floor(Math.random() * names.length)];
 };
 
 const setFortuneResult = (target) => {
@@ -121,6 +121,7 @@ const setFortuneResult = (target) => {
 const setLuckyPerson = () => {
   luckyText.innerText = '오늘의 은인';
   luckyName.innerText = getLuckyName();
+
 };
 
 const setLuckyColor = () => {

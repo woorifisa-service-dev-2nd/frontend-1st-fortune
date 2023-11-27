@@ -153,7 +153,7 @@ const setLuckyPerson = () => {
 function randomColorSelector() {
     const colorCode = ['white', 'black', 'gray', 'red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple',
         'violet', 'olive', 'skyblue', 'lime', 'beige', 'brown', 'ivory', 'khaki', 'pink'];
-const randomColor = Math.floor(Math.random() * 19);
+const randomColor = Math.floor(Math.random() * colorCode.length);
 }
 const setLuckyColor = () => {
     const colorValue = randomColorSelector();
